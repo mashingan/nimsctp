@@ -4,7 +4,6 @@ when not defined(linux):
   {.error: "Only supported in Linux".}
 
 {.passL: "-lsctp".}
-{.passC: "-fpack-struct=4".}
 
 import posix
 
@@ -33,14 +32,9 @@ const
 
 type
   TSctpAssocT* = int32
-  #TSockaddrStorage* {.importc: "struct sockaddr_storage",
-  #  header: sysheader.} = object
   TSockaddrStorage* = Sockaddr_storage
-  #TSockaddr* {.importc: "struct sockaddr", header: sysheader.} = object
   TSockaddr* = SockAddr
-  #Socklen* {.importc: "socklen_t", header: sysheader.} = object
   TSocklen* = Socklen
-  #TSaFamily* {.importc: "sa_family_t", header: sysheader.} = object
 
 
 
@@ -354,12 +348,6 @@ type
 
 
 
-#[
-const
-  sctpPrim* = sctpSetprim
-]#
-
-
 type
   TSctpSetadaptation* = object
     ssbAdaptationInd*: uint32
@@ -469,13 +457,6 @@ type
     gauthAssocId*: TSctpAssocT
     gauthNumberOfChunks*: uint32
     gauthChunks*: ptr uint8
-
-
-
-#[
-const
-  guthNumberOfChunks* = gauthNumberOfChunks
-]#
 
 
 type
